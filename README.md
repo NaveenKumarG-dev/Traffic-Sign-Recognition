@@ -154,7 +154,21 @@ Upload any PNG/JPG image to receive an instant prediction along with confidence 
 
 ## Results
 
-*(Results will be populated in `artifacts/metrics/test_metrics.json` after running the training pipeline.)*
+The model was trained for 20 epochs using Mixed Precision (AMP) on an NVIDIA RTX 4050 Laptop GPU. The best validation accuracy achieved was **99.82%**. 
 
-- Check `artifacts/plots/training_history.png` for loss and accuracy curves.
-- Check `artifacts/plots/confusion_matrix.png` for per-class performance details.
+Final evaluation on the completely unseen 12,630 test images yielded the following metrics:
+
+- **Accuracy**: 98.12%
+- **Precision**: 0.9818
+- **Recall**: 0.9812
+- **F1-Score**: 0.9812
+
+### Training History
+Below are the Loss and Accuracy curves generated during the 20 epochs of training:
+
+![Training History](artifacts/plots/training_history.png)
+
+### Confusion Matrix
+The confusion matrix below highlights the per-class performance on the test set, demonstrating the model's high precision across the vast majority of the 43 classes:
+
+![Confusion Matrix](artifacts/plots/confusion_matrix.png)
