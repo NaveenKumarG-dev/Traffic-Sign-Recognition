@@ -166,11 +166,16 @@ def inject_custom_css():
     </style>
     """, unsafe_allow_html=True)
 
+def safe_html(html_str):
+    """Safely render HTML by stripping newlines to prevent Markdown code block parsing."""
+    cleaned = html_str.replace('\n', '')
+    st.markdown(cleaned, unsafe_allow_html=True)
+
 def render_header():
     has_cuda = torch.cuda.is_available()
     cuda_badge = '<div class="cuda-badge">CUDA ACCELERATED</div>' if has_cuda else ''
     
-    st.markdown(f"""
+    safe_html(f"""
     <div class="hero-container">
         <div>
             <h1 class="hero-title">🚦 TRAFFIC SIGN RECOGNITION</h1>
@@ -182,17 +187,17 @@ def render_header():
             <div class="status-badge">● MODEL ONLINE</div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 def render_empty_state():
-    st.markdown("""
+    safe_html("""
     <div class="empty-state">
         <div style="font-size: 3rem; margin-bottom: 1rem;">🚦</div>
         <h3 style="margin-bottom: 0.5rem;">READY FOR ANALYSIS</h3>
         <p class="muted-text">Upload a traffic sign image<br>to begin classification.</p>
         <div class="small-caps" style="margin-top: 2rem;">Supported formats: PNG • JPG • JPEG</div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 def render_prediction_card(result):
     conf = result["confidence"]
@@ -215,7 +220,7 @@ def render_prediction_card(result):
         status_text = "⚠ LOW CONFIDENCE"
         bar_color = "#EF4444"
         
-    st.markdown(f"""<div class="glass-card">
+    safe_html(f"""<div class="glass-card">
 <div class="small-caps" style="margin-bottom: 1rem;">🎯 AI PREDICTION</div>
 <div class="pred-title">{name}</div>
 <div style="margin-top: 2rem;">
@@ -229,9 +234,9 @@ def render_prediction_card(result):
 </div>
 </div>
 <div class="status-badge" style="margin-top: 1rem; margin-bottom: 1rem;">✓ ANALYSIS COMPLETE</div>
-<span class="muted-text" style="margin-left: 0.5rem;">Inference completed on {"CUDA" if torch.cuda.is_available() else "CPU"}</span>""", unsafe_allow_html=True)
+<span class="muted-text" style="margin-left: 0.5rem;">Inference completed on {"CUDA" if torch.cuda.is_available() else "CPU"}</span>""")
     
-    st.markdown(f"""<div class="glass-card" style="margin-top: 1rem;">
+    safe_html(f"""<div class="glass-card" style="margin-top: 1rem;">
 <div class="small-caps" style="margin-bottom: 0.5rem;">AI ANALYSIS</div>
 <p class="muted-text" style="margin: 0; line-height: 1.5;">
 The model classified the uploaded image as <strong>{name}</strong> 
@@ -239,32 +244,32 @@ with a confidence of <strong>{conf:.2f}%</strong>.
 The prediction was generated using a CNN trained on the 
 German Traffic Sign Recognition Benchmark (GTSRB).
 </p>
-</div>""", unsafe_allow_html=True)
+</div>""")
 
 def render_top_predictions(result):
-    st.markdown('<div class="small-caps" style="margin: 2rem 0 1rem 0;">TOP PREDICTIONS</div>', unsafe_allow_html=True)
+    safe_html('<div class="small-caps" style="margin: 2rem 0 1rem 0;">TOP PREDICTIONS</div>')
     
-    html = '<div class="glass-card">\n'
+    html = '<div class="glass-card">'
     for i, pred in enumerate(result["top_predictions"][:5], 1):
         conf = pred["confidence"]
         name = pred["class_name"]
         
-        html += f'<div class="top-pred-row">\n'
-        html += f'    <div class="pred-rank">{(i):02d}</div>\n'
-        html += f'    <div class="pred-name">{name}\n'
-        html += f'        <div class="pred-bar-bg">\n'
-        html += f'            <div class="pred-bar-fill" style="width: {conf}%;"></div>\n'
-        html += f'        </div>\n'
-        html += f'    </div>\n'
-        html += f'    <div class="pred-value">{conf:.2f}%</div>\n'
-        html += f'</div>\n'
+        html += f'<div class="top-pred-row">'
+        html += f'<div class="pred-rank">{(i):02d}</div>'
+        html += f'<div class="pred-name">{name}'
+        html += f'<div class="pred-bar-bg">'
+        html += f'<div class="pred-bar-fill" style="width: {conf}%;"></div>'
+        html += f'</div>'
+        html += f'</div>'
+        html += f'<div class="pred-value">{conf:.2f}%</div>'
+        html += f'</div>'
     html += '</div>'
-    st.markdown(html, unsafe_allow_html=True)
+    safe_html(html)
 
 def render_model_info():
     gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "N/A"
     with st.expander("▸ About this model"):
-        st.markdown(f"""<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        safe_html(f"""<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
 <div>
 <div class="small-caps">Architecture</div>
 <div>CNN</div>
@@ -293,11 +298,11 @@ def render_model_info():
 <div class="small-caps">GPU</div>
 <div>{gpu_name}</div>
 </div>
-</div>""", unsafe_allow_html=True)
+</div>""")
 
 def render_pipeline():
     with st.expander("▸ How the AI works"):
-        st.markdown("""<div style="text-align: center; font-family: monospace; color: #94A3B8; line-height: 1.8;">
+        safe_html("""<div style="text-align: center; font-family: monospace; color: #94A3B8; line-height: 1.8;">
 IMAGE<br>
 ↓<br>
 RESIZE & NORMALIZE<br>
@@ -309,4 +314,4 @@ CNN FEATURE EXTRACTION<br>
 SOFTMAX PROBABILITIES<br>
 ↓<br>
 PREDICTION
-</div>""", unsafe_allow_html=True)
+</div>""")
