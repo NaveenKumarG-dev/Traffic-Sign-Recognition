@@ -48,7 +48,7 @@ def get_device():
     if torch.cuda.is_available():
         device = torch.device("cuda")
         gpu_name = torch.cuda.get_device_name(0)
-        vram = torch.cuda.get_device_properties(0).total_mem / (1024 ** 3)
+        vram = torch.cuda.get_device_properties(0).total_memory / (1024 ** 3)
         logger.info(f"Device: cuda")
         logger.info(f"GPU: {gpu_name}")
         logger.info(f"VRAM: {vram:.1f} GB")
@@ -116,7 +116,7 @@ def train_model(data_loaders, config=None):
     
     # Learning rate scheduler - reduce on plateau
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode='max', factor=0.5, patience=3, verbose=False
+        optimizer, mode='max', factor=0.5, patience=3
     )
     
     # Mixed precision scaler

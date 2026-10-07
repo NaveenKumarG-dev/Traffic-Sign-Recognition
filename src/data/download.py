@@ -96,8 +96,10 @@ def find_dataset_paths(base_path):
         
         for f in files:
             if f.lower() in ("test.csv", "gt-final_test.csv"):
-                result["test_csv"] = os.path.join(root, f)
-                logger.info(f"Found test CSV: {result['test_csv']}")
+                # Prefer test.csv over gt-final_test.csv if both exist
+                if result["test_csv"] is None or f.lower() == "test.csv":
+                    result["test_csv"] = os.path.join(root, f)
+                    logger.info(f"Found test CSV: {result['test_csv']}")
     
     # Validate
     if result["train_dir"] is None:
