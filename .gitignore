@@ -1,0 +1,52 @@
+# ============================================================
+# .gitignore - Traffic Sign Recognition Project
+# ============================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (downloaded via KaggleHub, not versioned)
+data/raw/
+data/processed/
+
+# Model checkpoints (too large for git)
+models/*.pth
+models/*.pt
+
+# Artifacts (generated during training)
+artifacts/logs/*.log
+artifacts/metrics/*.json
+artifacts/plots/*.png
+
+# Kaggle
+.kaggle/
+
+# Environment
+.env

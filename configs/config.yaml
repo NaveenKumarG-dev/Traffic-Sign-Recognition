@@ -1,0 +1,41 @@
+# ============================================================
+# Traffic Sign Recognition - Configuration
+# GTSRB Dataset | PyTorch CNN | CUDA-enabled
+# ============================================================
+
+project:
+  name: "Traffic Sign Recognition"
+  description: "GTSRB-based PyTorch CNN Classifier for Driver Assistance Systems"
+  version: "1.0.0"
+
+data:
+  image_size: 32
+  num_classes: 43
+  validation_split: 0.2
+  random_seed: 42
+
+training:
+  batch_size: 64
+  epochs: 20
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  random_seed: 42
+  num_workers: 2
+  pin_memory: true
+  use_amp: true  # Mixed precision training for RTX 4050
+
+model:
+  dropout: 0.3
+  num_classes: 43
+
+paths:
+  models_dir: "models"
+  artifacts_dir: "artifacts"
+  metrics_dir: "artifacts/metrics"
+  plots_dir: "artifacts/plots"
+  logs_dir: "artifacts/logs"
+  data_dir: "data"
+
+logging:
+  level: "INFO"
+  log_file: "artifacts/logs/training.log"

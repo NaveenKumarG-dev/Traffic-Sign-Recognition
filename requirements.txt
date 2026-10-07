@@ -1,0 +1,32 @@
+# ============================================================
+# Traffic Sign Recognition - Python Dependencies
+# ============================================================
+# 
+# IMPORTANT: PyTorch with CUDA must be installed separately:
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
+#
+# Then install the rest:
+#   pip install -r requirements.txt
+# ============================================================
+
+# Data & ML
+numpy
+pandas
+scikit-learn
+matplotlib
+
+# Image processing
+Pillow
+opencv-python
+
+# Configuration
+PyYAML
+
+# Dataset download
+kagglehub
+
+# Web application
+streamlit
+
+# Testing
+pytest
