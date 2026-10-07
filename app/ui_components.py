@@ -215,109 +215,98 @@ def render_prediction_card(result):
         status_text = "⚠ LOW CONFIDENCE"
         bar_color = "#EF4444"
         
-    st.markdown(f"""
-    <div class="glass-card">
-        <div class="small-caps" style="margin-bottom: 1rem;">🎯 AI PREDICTION</div>
-        <div class="pred-title">{name}</div>
-        
-        <div style="margin-top: 2rem;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-                <div class="pred-conf">{conf:.2f}%</div>
-            </div>
-            <div class="pred-bar-bg" style="height: 8px; margin-bottom: 0.5rem;">
-                <div class="pred-bar-fill" style="width: {conf}%; background-color: {bar_color};"></div>
-            </div>
-            <div class="{status_color}" style="font-size: 0.85rem; font-weight: 600;">{status_text}</div>
-        </div>
-    </div>
-    <div class="status-badge" style="margin-top: 1rem; margin-bottom: 1rem;">✓ ANALYSIS COMPLETE</div>
-    <span class="muted-text" style="margin-left: 0.5rem;">Inference completed on {"CUDA" if torch.cuda.is_available() else "CPU"}</span>
-    """, unsafe_allow_html=True)
+    st.markdown(f"""<div class="glass-card">
+<div class="small-caps" style="margin-bottom: 1rem;">🎯 AI PREDICTION</div>
+<div class="pred-title">{name}</div>
+<div style="margin-top: 2rem;">
+<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+<div class="pred-conf">{conf:.2f}%</div>
+</div>
+<div class="pred-bar-bg" style="height: 8px; margin-bottom: 0.5rem;">
+<div class="pred-bar-fill" style="width: {conf}%; background-color: {bar_color};"></div>
+</div>
+<div class="{status_color}" style="font-size: 0.85rem; font-weight: 600;">{status_text}</div>
+</div>
+</div>
+<div class="status-badge" style="margin-top: 1rem; margin-bottom: 1rem;">✓ ANALYSIS COMPLETE</div>
+<span class="muted-text" style="margin-left: 0.5rem;">Inference completed on {"CUDA" if torch.cuda.is_available() else "CPU"}</span>""", unsafe_allow_html=True)
     
-    st.markdown(f"""
-    <div class="glass-card" style="margin-top: 1rem;">
-        <div class="small-caps" style="margin-bottom: 0.5rem;">AI ANALYSIS</div>
-        <p class="muted-text" style="margin: 0; line-height: 1.5;">
-            The model classified the uploaded image as <strong>{name}</strong> 
-            with a confidence of <strong>{conf:.2f}%</strong>. 
-            The prediction was generated using a CNN trained on the 
-            German Traffic Sign Recognition Benchmark (GTSRB).
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f"""<div class="glass-card" style="margin-top: 1rem;">
+<div class="small-caps" style="margin-bottom: 0.5rem;">AI ANALYSIS</div>
+<p class="muted-text" style="margin: 0; line-height: 1.5;">
+The model classified the uploaded image as <strong>{name}</strong> 
+with a confidence of <strong>{conf:.2f}%</strong>. 
+The prediction was generated using a CNN trained on the 
+German Traffic Sign Recognition Benchmark (GTSRB).
+</p>
+</div>""", unsafe_allow_html=True)
 
 def render_top_predictions(result):
     st.markdown('<div class="small-caps" style="margin: 2rem 0 1rem 0;">TOP PREDICTIONS</div>', unsafe_allow_html=True)
     
-    html = '<div class="glass-card">'
+    html = '<div class="glass-card">\n'
     for i, pred in enumerate(result["top_predictions"][:5], 1):
         conf = pred["confidence"]
         name = pred["class_name"]
         
-        html += f"""
-        <div class="top-pred-row">
-            <div class="pred-rank">{(i):02d}</div>
-            <div class="pred-name">{name}
-                <div class="pred-bar-bg">
-                    <div class="pred-bar-fill" style="width: {conf}%;"></div>
-                </div>
-            </div>
-            <div class="pred-value">{conf:.2f}%</div>
-        </div>
-        """
+        html += f'<div class="top-pred-row">\n'
+        html += f'    <div class="pred-rank">{(i):02d}</div>\n'
+        html += f'    <div class="pred-name">{name}\n'
+        html += f'        <div class="pred-bar-bg">\n'
+        html += f'            <div class="pred-bar-fill" style="width: {conf}%;"></div>\n'
+        html += f'        </div>\n'
+        html += f'    </div>\n'
+        html += f'    <div class="pred-value">{conf:.2f}%</div>\n'
+        html += f'</div>\n'
     html += '</div>'
     st.markdown(html, unsafe_allow_html=True)
 
 def render_model_info():
     gpu_name = torch.cuda.get_device_name(0) if torch.cuda.is_available() else "N/A"
     with st.expander("▸ About this model"):
-        st.markdown(f"""
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-            <div>
-                <div class="small-caps">Architecture</div>
-                <div>CNN</div>
-            </div>
-            <div>
-                <div class="small-caps">Dataset</div>
-                <div>German Traffic Sign Recognition Benchmark</div>
-            </div>
-            <div>
-                <div class="small-caps">Classes</div>
-                <div>43</div>
-            </div>
-            <div>
-                <div class="small-caps">Input Resolution</div>
-                <div>32 × 32</div>
-            </div>
-            <div>
-                <div class="small-caps">Framework</div>
-                <div>PyTorch</div>
-            </div>
-            <div>
-                <div class="small-caps">Acceleration</div>
-                <div>CUDA</div>
-            </div>
-            <div style="grid-column: span 2;">
-                <div class="small-caps">GPU</div>
-                <div>{gpu_name}</div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+<div>
+<div class="small-caps">Architecture</div>
+<div>CNN</div>
+</div>
+<div>
+<div class="small-caps">Dataset</div>
+<div>German Traffic Sign Recognition Benchmark</div>
+</div>
+<div>
+<div class="small-caps">Classes</div>
+<div>43</div>
+</div>
+<div>
+<div class="small-caps">Input Resolution</div>
+<div>32 × 32</div>
+</div>
+<div>
+<div class="small-caps">Framework</div>
+<div>PyTorch</div>
+</div>
+<div>
+<div class="small-caps">Acceleration</div>
+<div>CUDA</div>
+</div>
+<div style="grid-column: span 2;">
+<div class="small-caps">GPU</div>
+<div>{gpu_name}</div>
+</div>
+</div>""", unsafe_allow_html=True)
 
 def render_pipeline():
     with st.expander("▸ How the AI works"):
-        st.markdown("""
-        <div style="text-align: center; font-family: monospace; color: #94A3B8; line-height: 1.8;">
-            IMAGE<br>
-            ↓<br>
-            RESIZE & NORMALIZE<br>
-            ↓<br>
-            CNN FEATURE EXTRACTION<br>
-            ↓<br>
-            43-CLASS CLASSIFICATION<br>
-            ↓<br>
-            SOFTMAX PROBABILITIES<br>
-            ↓<br>
-            PREDICTION
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown("""<div style="text-align: center; font-family: monospace; color: #94A3B8; line-height: 1.8;">
+IMAGE<br>
+↓<br>
+RESIZE & NORMALIZE<br>
+↓<br>
+CNN FEATURE EXTRACTION<br>
+↓<br>
+43-CLASS CLASSIFICATION<br>
+↓<br>
+SOFTMAX PROBABILITIES<br>
+↓<br>
+PREDICTION
+</div>""", unsafe_allow_html=True)
