@@ -166,9 +166,9 @@ Final evaluation on the completely unseen 12,630 test images yielded the followi
 ### Training History
 Below are the Loss and Accuracy curves generated during the 20 epochs of training:
 
-![Training History](artifacts/plots/training_history.png)
+![Training History](assets/training_history.png)
 
 ### Confusion Matrix
 The confusion matrix below highlights the per-class performance on the test set, demonstrating the model's high precision across the vast majority of the 43 classes:
 
-![Confusion Matrix](artifacts/plots/confusion_matrix.png)
+![Confusion Matrix](assets/confusion_matrix.png)
