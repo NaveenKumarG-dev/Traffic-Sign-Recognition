@@ -20,7 +20,7 @@ training:
   learning_rate: 0.001
   weight_decay: 0.0001
   random_seed: 42
-  num_workers: 2
+  num_workers: 0
   pin_memory: true
   use_amp: true  # Mixed precision training for RTX 4050
 
