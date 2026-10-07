@@ -117,8 +117,13 @@ def collect_test_samples(test_dir, test_csv):
     labels = []
     
     if test_csv and os.path.exists(test_csv):
-        df = pd.read_csv(test_csv)
-        
+        try:
+            # GTSRB test CSVs often use ';' delimiter, so we use sep=None to auto-detect
+            df = pd.read_csv(test_csv, sep=None, engine="python")
+        except Exception as e:
+            logger.error(f"Failed to read test CSV {test_csv}: {e}")
+            return image_paths, labels
+            
         # Handle different CSV column name conventions
         path_col = None
         label_col = None
