@@ -38,48 +38,94 @@ st.set_page_config(
 # ============================================================
 st.markdown("""
 <style>
+    /* Global Background */
+    [data-testid="stAppViewContainer"] {
+        background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+        color: #e0e0e0;
+    }
+    
+    /* Sidebar Glassmorphism */
+    [data-testid="stSidebar"] {
+        background: rgba(30, 30, 47, 0.6) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Typography */
+    h1, h2, h3, h4, h5, h6, p, span {
+        color: #ffffff !important;
+        font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
     .main-header {
         text-align: center;
-        padding: 1rem 0;
+        padding: 2rem 0;
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
+
+    /* Prediction Box Glassmorphism */
     .prediction-box {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        border-radius: 15px;
-        padding: 2rem;
-        color: white;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
         text-align: center;
         margin: 1rem 0;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
     }
+    
+    .prediction-box:hover {
+        transform: translateY(-5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
     .prediction-box h2 {
-        color: white;
+        background: -webkit-linear-gradient(45deg, #00d2ff, #3a7bd5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin-bottom: 0.5rem;
+        font-size: 2.2rem;
+        font-weight: 800;
     }
-    .confidence-bar {
-        background-color: rgba(255, 255, 255, 0.2);
+    
+    .prediction-box h1 {
+        font-size: 3.5rem;
+        margin: 1rem 0;
+        text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    }
+    
+    /* File Uploader override */
+    [data-testid="stFileUploadDropzone"] {
+        background: rgba(255, 255, 255, 0.02) !important;
+        backdrop-filter: blur(10px);
+        border: 2px dashed rgba(255, 255, 255, 0.2) !important;
+        border-radius: 16px !important;
+        transition: all 0.3s ease;
+    }
+    [data-testid="stFileUploadDropzone"]:hover {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 2px dashed rgba(0, 210, 255, 0.6) !important;
+    }
+
+    /* Cards / Containers */
+    div.stSpinner > div {
+        border-color: #00d2ff transparent transparent transparent !important;
+    }
+    
+    /* Progress Bars styling */
+    .stProgress > div > div > div > div {
+        background-image: linear-gradient(to right, #00d2ff, #3a7bd5);
         border-radius: 10px;
-        padding: 3px;
-        margin: 5px 0;
-    }
-    .confidence-fill {
-        background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-        border-radius: 8px;
-        padding: 8px 15px;
-        color: white;
-        font-weight: bold;
-        text-align: right;
-    }
-    .top-pred {
-        background-color: rgba(255, 255, 255, 0.05);
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
-        margin: 0.3rem 0;
-        border-left: 3px solid #667eea;
-    }
-    .sidebar-info {
-        background-color: rgba(102, 126, 234, 0.1);
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem 0;
     }
 </style>
 """, unsafe_allow_html=True)
